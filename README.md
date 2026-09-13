@@ -6,92 +6,79 @@
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: Uselessss
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: zehrin - ilahia college of engineering and technology
+- Member 2: jannath shirin - ilahia college of engineering and technology
 
 ### Project Description
-[2-3 lines about what your project does]
+You take a selfie. The app reads your soul and tells you:
+
+✨ Your Spirit Animal — What animal energy you're radiating
+🍕 Food Vibes — What food best represents your current energy
+💍 Marriage Date Prediction — When you'll find "the one" (completely inaccurate)
+🎨 Aura Color — Your current spiritual wavelength
+🎭 Vibe Archetype — Are you main character? Villain? Comedic relief?
+🌙 Zodiac Compatibility — Who you should avoid at parties
+🎵 Theme Song Suggestion — What song plays when you walk in
+📊 Chaos Rating — How much chaos you bring (1-10)
+🧿 Lucky Color/Number — For today's lottery ticket
+🔮 Life Advice — Completely unhelpful wisdom
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+THE CRISIS
 
-### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+You wake up. You look in the mirror. And you think:
+
+"Am I a chaos goblin or a golden retriever?"
+
+"Do I give main character energy or am I the NPC that bumps into the protagonist?"
+
+"What FOOD am I right now?"
+
+And suddenly it hits you — YOU DON'T KNOW WHO YOU ARE.
+
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
-
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
-
-### Implementation
-For Software:
-# Installation
-[commands]
-
-# Run
-[commands]
-
+Frontend
+HTML/CSS/JavaScript (vanilla) or React with Tailwind
+VS Code (the editor they're using)
+MediaPipe (for real-time face detection)
+Backend
+Node.js or Python (to handle API calls)
+Express.js (if Node)
+APIs
+Google Vision API (reads facial features, expressions)
+Claude API (generates hilarious/random readings)
+Optional: Face-api.js for local face landmarks
+Deployment
+Vercel (hosting the whole thing)
 ### Project Documentation
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot1]<img width="1470" height="956" alt="Screenshot 2026-09-13 at 3 58 02 PM" src="https://github.com/user-attachments/assets/89ad655f-0c5c-41c4-90a6-036ada82d3a1" />
 
 ![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+<img width="1470" height="956" alt="Screenshot 2026-09-13 at 3 59 34 PM" src="https://github.com/user-attachments/assets/ef201458-2f7e-4399-b4cf-9680ac0d8998" />
+
 
 ![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+<img width="1470" height="956" alt="Screenshot 2026-09-13 at 4 00 24 PM" src="https://github.com/user-attachments/assets/22fc8cba-485a-47d6-88b8-44ee3b6817a1" />
 
-# Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
 
-For Hardware:
+![Screenshot4] 
+<img width="1470" height="956" alt="Screenshot 2026-09-13 at 4 00 52 PM" src="https://github.com/user-attachments/assets/257d8b45-5741-45e5-abe1-92236c9c00ae" />
 
-# Schematic & Circuit
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
+![Screenshot5] 
+<img width="900" height="1400" alt="facefate-results (4)" src="https://github.com/user-attachments/assets/7f77ae03-1bcf-49b1-b249-8d15dd2662d1" />
 
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
 
-# Build Photos
-![Components](Add photo of your components here)
-*List out all components shown*
 
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
-
-### Project Demo
-# Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
-
-# Additional Demos
-[Add any extra demo materials/links]
-
-## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
