@@ -1,1 +1,1165 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FaceFate ✨ — What does your face say about your future?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --lavender:#EDE4FF;
+  --baby-blue:#DDF0FF;
+  --pink:#FFE1EF;
+  --soft-yellow:#FFF6D8;
+  --ink:#3B2E5A;
+  --ink-soft:#6B5C8F;
+  --accent:#FF6FA0;
+  --accent-2:#8B7CF6;
+  --accent-3:#4FC3E8;
+  --white:#FFFFFF;
+  --glass:rgba(255,255,255,0.6);
+  --glass-border:rgba(255,255,255,0.8);
+  --shadow:0 10px 30px rgba(139,124,246,0.18);
+  --radius-lg:28px;
+  --radius-md:20px;
+  --radius-sm:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Plus Jakarta Sans', sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 10% 10%, var(--pink) 0%, transparent 45%),
+    radial-gradient(circle at 90% 20%, var(--baby-blue) 0%, transparent 50%),
+    radial-gradient(circle at 30% 90%, var(--soft-yellow) 0%, transparent 45%),
+    linear-gradient(160deg, var(--lavender) 0%, var(--baby-blue) 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{
+  font-family:'Fredoka', 'Plus Jakarta Sans', sans-serif;
+  font-weight:600;
+  color:var(--ink);
+  margin:0;
+}
+button{font-family:inherit; cursor:pointer;}
+img{max-width:100%; display:block;}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+}
+
+/* ---------- floating decorations ---------- */
+.decor-layer{
+  position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden;
+}
+.decor{
+  position:absolute; opacity:0.55; filter:drop-shadow(0 4px 10px rgba(139,124,246,0.15));
+  animation:drift 14s ease-in-out infinite;
+  font-size:28px;
+}
+@keyframes drift{
+  0%{transform:translateY(0) rotate(0deg);}
+  50%{transform:translateY(-26px) rotate(8deg);}
+  100%{transform:translateY(0) rotate(0deg);}
+}
+
+/* ---------- layout ---------- */
+.app{
+  position:relative; z-index:1;
+  max-width:640px;
+  margin:0 auto;
+  padding:24px 20px 64px;
+  min-height:100vh;
+}
+.screen{display:none; animation:fadein 0.5s ease;}
+.screen.active{display:block;}
+@keyframes fadein{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+
+.topbar{
+  display:flex; align-items:center; justify-content:center;
+  gap:8px; padding:10px 0 28px;
+}
+.topbar .logo{
+  font-family:'Fredoka', sans-serif; font-size:22px; font-weight:600;
+  color:var(--ink); letter-spacing:0.2px;
+}
+.topbar .logo span{color:var(--accent);}
+
+/* ---------- glass card ---------- */
+.glass{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-lg);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  box-shadow:var(--shadow);
+}
+
+/* ---------- landing ---------- */
+.hero{
+  text-align:center; padding:36px 22px 30px;
+}
+.hero-emoji{font-size:52px; margin-bottom:6px; display:inline-block; animation:bob 3s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg);} 50%{transform:translateY(-10px) rotate(4deg);}}
+.hero h1{
+  font-size:clamp(28px, 6vw, 40px);
+  line-height:1.15;
+  margin-bottom:14px;
+}
+.hero p.subtitle{
+  color:var(--ink-soft);
+  font-size:16px;
+  line-height:1.5;
+  max-width:420px;
+  margin:0 auto 26px;
+}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  border:none; border-radius:999px;
+  padding:16px 30px;
+  font-size:17px; font-weight:700;
+  min-height:56px;
+  transition:transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn:active{transform:scale(0.97);}
+.btn-primary{
+  background:linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  color:#fff;
+  box-shadow:0 12px 26px rgba(255,111,160,0.38);
+}
+.btn-primary:hover{box-shadow:0 16px 32px rgba(255,111,160,0.48); transform:translateY(-2px);}
+.btn-secondary{
+  background:var(--white);
+  color:var(--ink);
+  border:2px solid rgba(139,124,246,0.25);
+}
+.btn-secondary:hover{border-color:var(--accent-2);}
+.btn-ghost{
+  background:transparent; color:var(--ink-soft); border:2px solid rgba(107,92,143,0.2);
+}
+.btn-block{width:100%;}
+.tag-line{
+  margin-top:16px; font-size:13px; color:var(--ink-soft); font-weight:600;
+  letter-spacing:0.2px;
+}
+
+.feature-row{
+  display:flex; gap:12px; margin-top:30px; padding:0 4px;
+}
+.feature-card{
+  flex:1; padding:16px 12px; text-align:center; border-radius:var(--radius-md);
+}
+.feature-card .fi{font-size:24px; margin-bottom:6px;}
+.feature-card .ft{font-size:13px; color:var(--ink-soft); font-weight:600;}
+
+.disclaimer{
+  margin-top:26px; padding:14px 16px; border-radius:var(--radius-sm);
+  font-size:12.5px; color:var(--ink-soft); text-align:center; line-height:1.5;
+}
+
+/* ---------- capture screen ---------- */
+.section-head{text-align:center; margin-bottom:24px;}
+.section-head h2{font-size:24px; margin-bottom:6px;}
+.section-head p{color:var(--ink-soft); font-size:14.5px; margin:0;}
+
+.capture-card{padding:26px 22px; margin-bottom:16px;}
+.capture-options{display:flex; flex-direction:column; gap:14px;}
+
+.option-tile{
+  display:flex; align-items:center; gap:14px;
+  padding:18px; border-radius:var(--radius-md);
+  background:var(--white); border:2px solid transparent;
+  transition:border-color 0.2s ease, transform 0.2s ease;
+}
+.option-tile:hover{border-color:var(--accent-2); transform:translateY(-2px);}
+.option-tile .oi{font-size:30px;}
+.option-tile .ot{flex:1; text-align:left;}
+.option-tile .ot strong{display:block; font-size:15.5px; margin-bottom:2px;}
+.option-tile .ot span{font-size:12.5px; color:var(--ink-soft);}
+
+.camera-wrap{
+  position:relative; border-radius:var(--radius-md); overflow:hidden;
+  background:#111; aspect-ratio:3/4; max-height:60vh; margin-bottom:16px;
+  display:none;
+}
+.camera-wrap.active{display:block;}
+#video{width:100%; height:100%; object-fit:cover; transform:scaleX(-1);}
+.capture-btn-wrap{
+  position:absolute; bottom:16px; left:0; right:0;
+  display:flex; justify-content:center;
+}
+.capture-btn{
+  width:70px; height:70px; border-radius:50%;
+  background:#fff; border:5px solid rgba(255,255,255,0.5);
+  box-shadow:0 4px 16px rgba(0,0,0,0.3);
+}
+.capture-btn:active{transform:scale(0.92);}
+
+.preview-wrap{display:none; text-align:center;}
+.preview-wrap.active{display:block;}
+.preview-frame{
+  border-radius:var(--radius-md); overflow:hidden; margin-bottom:18px;
+  max-height:60vh; background:#eee;
+}
+.preview-frame img{width:100%; object-fit:cover;}
+.preview-actions{display:flex; gap:12px;}
+.preview-actions .btn{flex:1;}
+
+.camera-error{
+  display:none; padding:14px 16px; border-radius:var(--radius-sm);
+  background:rgba(255,111,160,0.12); color:var(--ink); font-size:13.5px;
+  text-align:center; margin-bottom:14px; line-height:1.5;
+}
+.camera-error.active{display:block;}
+
+input[type="file"]{display:none;}
+
+/* ---------- scanning screen ---------- */
+.scan-stage{text-align:center; padding:30px 20px 36px;}
+.scanner-frame{
+  position:relative; width:230px; height:230px; margin:0 auto 26px;
+  border-radius:50%; overflow:hidden; border:4px solid var(--white);
+  box-shadow:0 0 0 6px rgba(139,124,246,0.18), var(--shadow);
+}
+.scanner-frame img{width:100%; height:100%; object-fit:cover;}
+.scan-line{
+  position:absolute; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, transparent, var(--accent-3) 20%, var(--accent) 50%, var(--accent-3) 80%, transparent);
+  box-shadow:0 0 12px 3px rgba(79,195,232,0.7);
+  animation:scanmove 1.6s linear infinite;
+}
+@keyframes scanmove{0%{top:0%;} 50%{top:96%;} 100%{top:0%;}}
+.scan-ring{
+  position:absolute; inset:-4px; border-radius:50%;
+  border:3px dashed rgba(139,124,246,0.5);
+  animation:spin 6s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.scan-message{
+  font-size:16px; font-weight:700; min-height:26px; margin-bottom:10px;
+  color:var(--ink);
+}
+.scan-progress{
+  width:100%; max-width:280px; height:8px; border-radius:999px;
+  background:rgba(139,124,246,0.15); margin:16px auto 0; overflow:hidden;
+}
+.scan-progress-bar{
+  height:100%; width:0%; border-radius:999px;
+  background:linear-gradient(90deg, var(--accent-3), var(--accent-2), var(--accent));
+  transition:width 0.2s ease;
+}
+.scan-complete{
+  display:none; font-size:20px; font-weight:700; color:var(--accent);
+  margin-top:14px;
+}
+
+/* ---------- results screen ---------- */
+.results-header{text-align:center; padding:8px 0 22px;}
+.results-photo{
+  width:110px; height:110px; border-radius:50%; overflow:hidden;
+  margin:0 auto 14px; border:4px solid #fff; box-shadow:var(--shadow);
+}
+.results-photo img{width:100%; height:100%; object-fit:cover;}
+.results-header h2{font-size:24px;}
+.results-header p{color:var(--ink-soft); font-size:13.5px; margin-top:6px;}
+
+.card-grid{display:flex; flex-direction:column; gap:14px;}
+.result-card{
+  padding:20px; display:flex; gap:14px; align-items:flex-start;
+  opacity:0; transform:translateY(14px);
+  animation:cardin 0.5s ease forwards;
+}
+@keyframes cardin{to{opacity:1; transform:translateY(0);}}
+.result-card .ri{
+  font-size:26px; width:44px; height:44px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  background:rgba(255,255,255,0.7);
+}
+.result-card .rc{flex:1; min-width:0;}
+.result-card .rl{
+  font-size:11.5px; text-transform:uppercase; letter-spacing:0.6px;
+  color:var(--ink-soft); font-weight:700; margin-bottom:4px;
+}
+.result-card .rv{font-size:19px; font-weight:700; margin-bottom:4px;}
+.result-card .rd{font-size:13.5px; color:var(--ink-soft); line-height:1.45;}
+
+.progress-row{margin-top:8px;}
+.progress-row .pbar{
+  height:9px; border-radius:999px; background:rgba(139,124,246,0.15);
+  overflow:hidden; margin-top:6px;
+}
+.progress-row .pfill{height:100%; border-radius:999px;}
+
+/* ---------- results slide carousel ---------- */
+.slides-shell{padding:22px 18px 18px; margin-bottom:16px; overflow:hidden;}
+.slide-title{
+  text-align:center; font-size:15px; font-weight:700; color:var(--ink-soft);
+  margin-bottom:14px; letter-spacing:0.2px;
+}
+.slides-viewport{overflow:hidden; position:relative;}
+.slides-track{
+  display:flex; transition:transform 0.4s cubic-bezier(0.65,0,0.35,1);
+  touch-action:pan-y;
+}
+.slide{
+  min-width:100%; flex-shrink:0;
+  display:flex; flex-direction:column; gap:12px;
+  padding:2px 2px 4px;
+}
+.slide-nav{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-top:16px;
+}
+.nav-btn{
+  width:42px; height:42px; border-radius:50%; flex-shrink:0;
+  background:var(--white); border:none; box-shadow:var(--shadow);
+  font-size:17px; color:var(--ink); display:flex; align-items:center; justify-content:center;
+  transition:transform 0.15s ease, opacity 0.15s ease;
+}
+.nav-btn:active{transform:scale(0.9);}
+.nav-btn:disabled{opacity:0.3; box-shadow:none;}
+.slide-dots{display:flex; gap:7px; align-items:center; justify-content:center; flex-wrap:wrap;}
+.dot{
+  width:8px; height:8px; border-radius:999px; background:rgba(139,124,246,0.28);
+  transition:width 0.25s ease, background 0.25s ease; border:none; padding:0;
+}
+.dot.active{width:22px; background:linear-gradient(135deg, var(--accent), var(--accent-2));}
+
+.mini-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.mini-stat{padding:16px; text-align:center;}
+.mini-stat .mv{font-size:22px; font-weight:700;}
+.mini-stat .ml{font-size:11.5px; color:var(--ink-soft); font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-top:2px;}
+
+.summary-card{
+  margin-top:22px; padding:24px 22px;
+  background:linear-gradient(135deg, rgba(255,111,160,0.12), rgba(139,124,246,0.12));
+}
+.summary-card h3{text-align:center; font-size:19px; margin-bottom:16px;}
+.summary-list{list-style:none; margin:0 0 18px; padding:0; display:flex; flex-direction:column; gap:9px;}
+.summary-list li{
+  display:flex; justify-content:space-between; font-size:14px;
+  padding-bottom:9px; border-bottom:1px dashed rgba(107,92,143,0.2);
+}
+.summary-list li:last-child{border-bottom:none; padding-bottom:0;}
+.summary-list .sk{color:var(--ink-soft); font-weight:600;}
+.summary-list .sv{font-weight:700;}
+.summary-actions{display:flex; flex-direction:column; gap:10px;}
+.summary-actions .row{display:flex; gap:10px;}
+.summary-actions .row .btn{flex:1;}
+
+.disclaimer-block{
+  margin-top:22px; padding:16px 18px; border-radius:var(--radius-sm);
+  font-size:12.5px; color:var(--ink-soft); line-height:1.55; text-align:center;
+}
+.privacy-note{
+  margin-top:12px; text-align:center; font-size:12px; color:var(--ink-soft);
+}
+
+.toast{
+  position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(20px);
+  background:var(--ink); color:#fff; padding:12px 20px; border-radius:999px;
+  font-size:13.5px; font-weight:600; opacity:0; pointer-events:none;
+  transition:opacity 0.25s ease, transform 0.25s ease; z-index:20;
+}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+canvas.hidden-canvas{display:none;}
+
+@media (min-width:480px){
+  .feature-row{padding:0 12px;}
+}
+</style>
+</head>
+<body>
+
+<div class="decor-layer" id="decorLayer" aria-hidden="true"></div>
+
+<div class="app">
+  <div class="topbar">
+    <div class="logo">Face<span>Fate</span> ✨</div>
+  </div>
+
+  <!-- ======================= LANDING SCREEN ======================= -->
+  <section class="screen active" id="screen-landing">
+    <div class="hero glass">
+      <div class="hero-emoji">🔮</div>
+      <h1>What does your face say about your future? 🔮</h1>
+      <p class="subtitle">Take a photo and let our completely questionable AI reveal your destiny. 😂✨</p>
+      <button class="btn btn-primary" id="btnDiscover">✨ Discover My Fate</button>
+      <div class="tag-line">100% entertainment • 0% scientific accuracy</div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-card glass">
+        <div class="fi">🍛</div>
+        <div class="ft">Food twin</div>
+      </div>
+      <div class="feature-card glass">
+        <div class="fi">🐼</div>
+        <div class="ft">Spirit animal</div>
+      </div>
+      <div class="feature-card glass">
+        <div class="fi">👑</div>
+        <div class="ft">Main-character score</div>
+      </div>
+    </div>
+
+    <div class="disclaimer glass">
+      ✨ Just for fun! These predictions are fictional and are not scientifically accurate.
+    </div>
+  </section>
+
+  <!-- ======================= CAPTURE SCREEN ======================= -->
+  <section class="screen" id="screen-capture">
+    <div class="section-head">
+      <h2>Show us your face 📸</h2>
+      <p>Take a live photo or upload one from your device.</p>
+    </div>
+
+    <div class="camera-error" id="cameraError">
+      Oops! The camera is hiding from us 😭. Please allow camera access or upload a photo instead.
+    </div>
+
+    <div class="capture-card glass" id="optionsCard">
+      <div class="capture-options">
+        <button class="option-tile" id="btnOpenCamera">
+          <span class="oi">📸</span>
+          <span class="ot"><strong>Take Live Photo</strong><span>Use your camera right now</span></span>
+        </button>
+        <button class="option-tile" id="btnOpenUpload">
+          <span class="oi">🖼️</span>
+          <span class="ot"><strong>Upload a Photo</strong><span>Choose one from your device</span></span>
+        </button>
+      </div>
+      <input type="file" id="fileInput" accept="image/*">
+    </div>
+
+    <div class="camera-wrap glass" id="cameraWrap">
+      <video id="video" autoplay playsinline muted></video>
+      <div class="capture-btn-wrap">
+        <button class="capture-btn" id="btnSnap" aria-label="Take my picture"></button>
+      </div>
+    </div>
+
+    <div class="preview-wrap" id="previewWrap">
+      <div class="preview-frame glass">
+        <img id="previewImg" alt="Your captured photo preview">
+      </div>
+      <div class="preview-actions">
+        <button class="btn btn-secondary" id="btnRetake">🔄 Retake</button>
+        <button class="btn btn-primary" id="btnUsePhoto">✨ Use This Photo</button>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:18px;">
+      <button class="btn btn-ghost" id="btnBackLanding">← Back</button>
+    </div>
+  </section>
+
+  <!-- ======================= SCANNING SCREEN ======================= -->
+  <section class="screen" id="screen-scan">
+    <div class="scan-stage glass">
+      <div class="scanner-frame">
+        <img id="scanImg" alt="Your photo being scanned">
+        <div class="scan-line"></div>
+        <div class="scan-ring"></div>
+      </div>
+      <div class="scan-message" id="scanMessage">🔍 Looking for vibes...</div>
+      <div class="scan-progress"><div class="scan-progress-bar" id="scanProgressBar"></div></div>
+      <div class="scan-complete" id="scanComplete">✨ ANALYSIS COMPLETE!</div>
+    </div>
+  </section>
+
+  <!-- ======================= RESULTS SCREEN ======================= -->
+  <section class="screen" id="screen-results">
+    <div class="results-header">
+      <div class="results-photo"><img id="resultsImg" alt="Your photo"></div>
+      <h2>✨ Your Fate Has Been Revealed!</h2>
+      <p>Scientifically inaccurate since day one.</p>
+    </div>
+
+    <div class="slides-shell glass">
+      <div class="slide-title" id="slideTitle"></div>
+      <div class="slides-viewport">
+        <div class="slides-track" id="slidesTrack"></div>
+      </div>
+      <div class="slide-nav">
+        <button class="nav-btn" id="btnPrevSlide" aria-label="Previous category">←</button>
+        <div class="slide-dots" id="slideDots"></div>
+        <button class="nav-btn" id="btnNextSlide" aria-label="Next category">→</button>
+      </div>
+    </div>
+
+    <div class="summary-card glass" id="summaryCard">
+      <h3>✨ MY FACEFATE RESULTS ✨</h3>
+      <ul class="summary-list" id="summaryList"></ul>
+      <div class="summary-actions">
+        <div class="row">
+          <button class="btn btn-secondary" id="btnShare">📤 Share</button>
+          <button class="btn btn-secondary" id="btnSave">📥 Save</button>
+        </div>
+        <button class="btn btn-primary btn-block" id="btnScanAgain">🔄 Scan Again</button>
+      </div>
+    </div>
+
+    <div class="disclaimer-block glass">
+      ⚠️ FaceFate is an entertainment experience. Our results are fictional and should not be treated as real predictions or scientific facial analysis.
+    </div>
+    <div class="privacy-note">🔒 Your photo stays on your device. This website is just for fun.</div>
+  </section>
+</div>
+
+<canvas class="hidden-canvas" id="captureCanvas"></canvas>
+<canvas class="hidden-canvas" id="shareCanvas"></canvas>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------------------------------------------------
+     0. Decorative floating elements
+  --------------------------------------------------------- */
+  var decorEmojis = ["✨","💕","⭐","🌸","☁️","💫","🩵"];
+  var decorLayer = document.getElementById('decorLayer');
+  for (var i = 0; i < 16; i++){
+    var el = document.createElement('div');
+    el.className = 'decor';
+    el.textContent = decorEmojis[i % decorEmojis.length];
+    el.style.left = (Math.random()*94) + 'vw';
+    el.style.top = (Math.random()*94) + 'vh';
+    el.style.fontSize = (16 + Math.random()*20) + 'px';
+    el.style.animationDuration = (10 + Math.random()*10) + 's';
+    el.style.animationDelay = (Math.random()*6) + 's';
+    decorLayer.appendChild(el);
+  }
+
+  /* ---------------------------------------------------------
+     1. Screen navigation
+  --------------------------------------------------------- */
+  var screens = {
+    landing: document.getElementById('screen-landing'),
+    capture: document.getElementById('screen-capture'),
+    scan: document.getElementById('screen-scan'),
+    results: document.getElementById('screen-results')
+  };
+  function showScreen(name){
+    Object.keys(screens).forEach(function(k){
+      screens[k].classList.toggle('active', k === name);
+    });
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  /* ---------------------------------------------------------
+     2. Toast helper
+  --------------------------------------------------------- */
+  var toastEl = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2400);
+  }
+
+  /* ---------------------------------------------------------
+     3. Capture screen state
+  --------------------------------------------------------- */
+  var video = document.getElementById('video');
+  var cameraWrap = document.getElementById('cameraWrap');
+  var optionsCard = document.getElementById('optionsCard');
+  var previewWrap = document.getElementById('previewWrap');
+  var previewImg = document.getElementById('previewImg');
+  var cameraError = document.getElementById('cameraError');
+  var fileInput = document.getElementById('fileInput');
+  var captureCanvas = document.getElementById('captureCanvas');
+  var currentStream = null;
+  var currentPhotoDataUrl = null;
+
+  function stopCamera(){
+    if (currentStream){
+      currentStream.getTracks().forEach(function(t){ t.stop(); });
+      currentStream = null;
+    }
+    cameraWrap.classList.remove('active');
+  }
+
+  function resetCaptureUI(){
+    stopCamera();
+    previewWrap.classList.remove('active');
+    optionsCard.style.display = '';
+    cameraError.classList.remove('active');
+  }
+
+  document.getElementById('btnDiscover').addEventListener('click', function(){
+    resetCaptureUI();
+    showScreen('capture');
+  });
+  document.getElementById('btnBackLanding').addEventListener('click', function(){
+    resetCaptureUI();
+    showScreen('landing');
+  });
+
+  document.getElementById('btnOpenCamera').addEventListener('click', function(){
+    cameraError.classList.remove('active');
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+      cameraError.classList.add('active');
+      return;
+    }
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false })
+      .then(function(stream){
+        currentStream = stream;
+        video.srcObject = stream;
+        optionsCard.style.display = 'none';
+        cameraWrap.classList.add('active');
+      })
+      .catch(function(){
+        cameraError.classList.add('active');
+      });
+  });
+
+  document.getElementById('btnSnap').addEventListener('click', function(){
+    var w = video.videoWidth || 480;
+    var h = video.videoHeight || 640;
+    captureCanvas.width = w;
+    captureCanvas.height = h;
+    var ctx = captureCanvas.getContext('2d');
+    // mirror to match the preview the user saw
+    ctx.translate(w, 0);
+    ctx.scale(-1, 1);
+    ctx.drawImage(video, 0, 0, w, h);
+    currentPhotoDataUrl = captureCanvas.toDataURL('image/jpeg', 0.9);
+    previewImg.src = currentPhotoDataUrl;
+    stopCamera();
+    previewWrap.classList.add('active');
+  });
+
+  document.getElementById('btnOpenUpload').addEventListener('click', function(){
+    fileInput.click();
+  });
+  fileInput.addEventListener('change', function(e){
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      currentPhotoDataUrl = ev.target.result;
+      previewImg.src = currentPhotoDataUrl;
+      optionsCard.style.display = 'none';
+      previewWrap.classList.add('active');
+    };
+    reader.readAsDataURL(file);
+  });
+
+  document.getElementById('btnRetake').addEventListener('click', function(){
+    currentPhotoDataUrl = null;
+    fileInput.value = '';
+    previewWrap.classList.remove('active');
+    optionsCard.style.display = '';
+  });
+
+  document.getElementById('btnUsePhoto').addEventListener('click', function(){
+    if (!currentPhotoDataUrl) return;
+    startScan(currentPhotoDataUrl);
+  });
+
+  /* ---------------------------------------------------------
+     4. Scanning animation
+  --------------------------------------------------------- */
+  var scanMessages = [
+    "🔍 Looking for vibes...",
+    "✨ Detecting questionable energy...",
+    "🧠 Consulting the imaginary AI...",
+    "🍛 Calculating biryani compatibility...",
+    "🐼 Searching the animal database...",
+    "💍 Consulting the extremely unreliable future...",
+    "💰 Calculating suspicious salary predictions...",
+    "🪄 Asking the universe...",
+    "😂 Detecting chaos levels..."
+  ];
+  var scanImg = document.getElementById('scanImg');
+  var scanMessageEl = document.getElementById('scanMessage');
+  var scanProgressBar = document.getElementById('scanProgressBar');
+  var scanCompleteEl = document.getElementById('scanComplete');
+  var scanTimers = [];
+
+  function clearScanTimers(){
+    scanTimers.forEach(function(t){ clearTimeout(t); clearInterval(t); });
+    scanTimers = [];
+  }
+
+  function startScan(photoDataUrl){
+    showScreen('scan');
+    scanImg.src = photoDataUrl;
+    scanCompleteEl.style.display = 'none';
+    scanProgressBar.style.width = '0%';
+    clearScanTimers();
+
+    var totalDuration = 3400 + Math.random()*1600; // 3.4s - 5s
+    var msgInterval = totalDuration / (scanMessages.length + 1);
+    var order = scanMessages.slice().sort(function(){ return Math.random()-0.5; });
+
+    order.forEach(function(msg, idx){
+      var t = setTimeout(function(){
+        scanMessageEl.textContent = msg;
+      }, idx * msgInterval);
+      scanTimers.push(t);
+    });
+
+    var start = Date.now();
+    var progressTimer = setInterval(function(){
+      var pct = Math.min(100, ((Date.now()-start)/totalDuration)*100);
+      scanProgressBar.style.width = pct + '%';
+      if (pct >= 100) clearInterval(progressTimer);
+    }, 80);
+    scanTimers.push(progressTimer);
+
+    var doneTimer = setTimeout(function(){
+      scanMessageEl.textContent = "✨ ANALYSIS COMPLETE!";
+      scanCompleteEl.style.display = 'block';
+      setTimeout(function(){
+        buildResults(photoDataUrl);
+        showScreen('results');
+      }, 700);
+    }, totalDuration);
+    scanTimers.push(doneTimer);
+  }
+
+  /* ---------------------------------------------------------
+     5. Randomization data
+  --------------------------------------------------------- */
+  function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+  function randInt(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+  var foods = [
+    { name:"Biryani", emoji:"🍛", desc:"You have layers, you're slightly chaotic, and somehow everyone wants you at the party." },
+    { name:"Pizza", emoji:"🍕", desc:"Reliable, loved by everyone, and somehow always the last one to leave the gathering." },
+    { name:"Shawarma", emoji:"🌯", desc:"Wrapped up tight on the outside, absolute chaos on the inside." },
+    { name:"Dosa", emoji:"🥞", desc:"Thin, crispy patience on the outside, surprisingly complex on the inside." },
+    { name:"Burger", emoji:"🍔", desc:"Stacked with personality, messy in the best way, impossible to dislike." },
+    { name:"Ice Cream", emoji:"🍦", desc:"Sweet, a little cold at first, but melts everyone's heart eventually." },
+    { name:"Noodles", emoji:"🍜", desc:"Tangled, a little dramatic, but somehow it all works out in the end." },
+    { name:"Samosa", emoji:"🥟", desc:"Crispy exterior, surprisingly soft and emotional interior." },
+    { name:"French Fries", emoji:"🍟", desc:"Universally beloved, slightly salty, gone before anyone notices." },
+    { name:"Chocolate Cake", emoji:"🍰", desc:"Rich, a bit much sometimes, but everyone secretly wants a second slice of you." }
+  ];
+
+  var animals = [
+    { name:"Panda", emoji:"🐼", desc:"Cute, mysterious, occasionally lazy, and always thinking about food." },
+    { name:"Cat", emoji:"🐱", desc:"Independent, judgmental in a loving way, naps like it's a competitive sport." },
+    { name:"Golden Retriever", emoji:"🐶", desc:"Relentlessly loyal, way too excited about small things, everyone's favorite." },
+    { name:"Sloth", emoji:"🦥", desc:"Moves at your own pace, thinks fast, acts eventually." },
+    { name:"Penguin", emoji:"🐧", desc:"Formally dressed for absolutely no reason, waddles through life with confidence." },
+    { name:"Fox", emoji:"🦊", desc:"Sly, clever, and somehow always three steps ahead of everyone." },
+    { name:"Capybara", emoji:"🦫", desc:"Unbothered by literally everything, the definition of chill." },
+    { name:"Koala", emoji:"🐨", desc:"Sleeps 20 hours a day and still seems more productive than most people." },
+    { name:"Rabbit", emoji:"🐰", desc:"Nervous energy, surprisingly fast when it matters, secretly very soft-hearted." },
+    { name:"Otter", emoji:"🦦", desc:"Playful, holds hands with people they like, floats through problems." }
+  ];
+
+  var destinations = [
+    { name:"Japan", emoji:"🇯🇵", reason:"The algorithm detected strong 'I need to take 700 photos here' energy." },
+    { name:"South Korea", emoji:"🇰🇷", reason:"Your aura matched suspiciously well with street food and neon signs." },
+    { name:"Switzerland", emoji:"🇨🇭", reason:"You radiate 'overpriced chocolate and dramatic mountain views' energy." },
+    { name:"Italy", emoji:"🇮🇹", reason:"The AI sensed a deep, unspoken love for pasta-based decision making." },
+    { name:"Dubai", emoji:"🇦🇪", reason:"Your vibe screamed 'I will pose in front of a very tall building.'" },
+    { name:"Singapore", emoji:"🇸🇬", reason:"Clean streets, good food, chaotic itinerary — very on brand for you." },
+    { name:"Australia", emoji:"🇦🇺", reason:"You have unresolved business with a kangaroo, apparently." },
+    { name:"London", emoji:"🇬🇧", reason:"The algorithm detected a strong tolerance for rain and tea-based emotions." },
+    { name:"Paris", emoji:"🇫🇷", reason:"Your face said 'aesthetic café photo' louder than words ever could." },
+    { name:"New York", emoji:"🇺🇸", reason:"Fast-paced energy detected. You'll fit right into the chaos." }
+  ];
+
+  var redFlags = [
+    "Overthinking 🚩", "Procrastination 🚩", "Always late 🚩",
+    "Replying after 3 business days 🚩", "Saying \"I'm fine\" 🚩",
+    "Checking your phone every 2 minutes 🚩", "Starting everything tomorrow 🚩",
+    "Getting attached to fictional characters 🚩"
+  ];
+  var redFlagDescs = {
+    "Overthinking 🚩": "You can turn a two-word text message into a 47-minute investigation.",
+    "Procrastination 🚩": "You'll get to it. Right after this one more episode.",
+    "Always late 🚩": "Your internal clock runs on its own fictional timezone.",
+    "Replying after 3 business days 🚩": "The message was read. The response is still loading.",
+    "Saying \"I'm fine\" 🚩": "Translation services are required to understand what this actually means.",
+    "Checking your phone every 2 minutes 🚩": "Nothing new happened in the last 90 seconds either.",
+    "Starting everything tomorrow 🚩": "Tomorrow has been extremely productive in your imagination.",
+    "Getting attached to fictional characters 🚩": "Real people could never compare to your favorite side character."
+  };
+
+  var houses = [
+    { name:"Gryffindor", emoji:"🦁", desc:"Bold decisions made mostly on vibes and adrenaline." },
+    { name:"Ravenclaw", emoji:"🦅", desc:"Your brain has 47 tabs open and somehow 46 of them are unnecessary." },
+    { name:"Hufflepuff", emoji:"🦡", desc:"Loyal to a fault, and secretly the most powerful house of all." },
+    { name:"Slytherin", emoji:"🐍", desc:"Ambitious, a little dramatic, and always three steps ahead." }
+  ];
+
+  var superpowers = [
+    "Finding your phone while holding it",
+    "Remembering useless information perfectly",
+    "Detecting when someone is about to ask you for a favor",
+    "Sleeping anywhere",
+    "Opening snacks silently",
+    "Knowing when food is ready from another room",
+    "Pretending to understand complicated conversations",
+    "Finding Wi-Fi everywhere"
+  ];
+
+  var secretTalents = [
+    "Remembering embarrassing things from 2017 at 2:43 AM.",
+    "Waking up exactly one minute before the alarm, every single time.",
+    "Instantly knowing when someone is lying about being 'almost there.'",
+    "Sensing free food from three rooms away.",
+    "Turning a 5-minute task into a 3-hour project.",
+    "Perfectly quoting a movie no one else has seen."
+  ];
+
+  var alienSyllables1 = ["Zor","Bli","Ква","Xen","Nub","Glo","Vex","Trik","Plu","Yon"];
+  var alienSyllables2 = ["blina","xor","zap","dranth","ovix","quill","matrix","onus","yzer","gorp"];
+
+  function generateAlienName(){
+    var name = pick(alienSyllables1) + pick(alienSyllables2);
+    return name + "-" + randInt(2,9) + "000";
+  }
+
+  function generateZombieSurvival(){
+    var days = randInt(1,6);
+    var hours = randInt(0,23);
+    var mins = randInt(0,59);
+    return days + " day" + (days!==1?"s":"") + ", " + hours + " hour" + (hours!==1?"s":"") + " and " + mins + " minute" + (mins!==1?"s":"") + ".";
+  }
+
+  /* ---------------------------------------------------------
+     6. Build results
+  --------------------------------------------------------- */
+  var lastResult = null;
+  var currentSlide = 0;
+  var totalSlides = 0;
+  var slideTitles = [];
+
+  var slidesTrack = document.getElementById('slidesTrack');
+  var slideDotsWrap = document.getElementById('slideDots');
+  var slideTitleEl = document.getElementById('slideTitle');
+  var btnPrevSlide = document.getElementById('btnPrevSlide');
+  var btnNextSlide = document.getElementById('btnNextSlide');
+
+  function updateSlideUI(animatePercentBars){
+    slidesTrack.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+    slideTitleEl.textContent = slideTitles[currentSlide] || '';
+    Array.prototype.forEach.call(slideDotsWrap.children, function(dot, i){
+      dot.classList.toggle('active', i === currentSlide);
+    });
+    btnPrevSlide.disabled = (currentSlide === 0);
+    btnNextSlide.disabled = (currentSlide === totalSlides - 1);
+
+    // animate any progress bars on the now-visible slide
+    var activeSlideEl = slidesTrack.children[currentSlide];
+    if (activeSlideEl){
+      var fills = activeSlideEl.querySelectorAll('.pfill');
+      fills.forEach(function(fill){
+        if (fill.dataset.animated === 'true') return;
+        var pct = fill.getAttribute('data-pct');
+        setTimeout(function(){
+          fill.style.transition = 'width 1s ease';
+          fill.style.width = pct + '%';
+          fill.dataset.animated = 'true';
+        }, 150);
+      });
+    }
+  }
+
+  function goToSlide(index){
+    if (index < 0 || index >= totalSlides) return;
+    currentSlide = index;
+    updateSlideUI();
+  }
+
+  btnPrevSlide.addEventListener('click', function(){ goToSlide(currentSlide - 1); });
+  btnNextSlide.addEventListener('click', function(){ goToSlide(currentSlide + 1); });
+
+  // swipe support
+  var touchStartX = null;
+  slidesTrack.addEventListener('touchstart', function(e){
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  slidesTrack.addEventListener('touchend', function(e){
+    if (touchStartX === null) return;
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40){
+      if (dx < 0) goToSlide(currentSlide + 1);
+      else goToSlide(currentSlide - 1);
+    }
+    touchStartX = null;
+  }, { passive: true });
+
+  function buildResults(photoDataUrl){
+    document.getElementById('resultsImg').src = photoDataUrl;
+
+    var food = pick(foods);
+    var animal = pick(animals);
+    var marriageYear = new Date().getFullYear() + randInt(3, 20);
+    var marriageConfidence = randInt(60, 95);
+    var salaryLPA = (randInt(30, 400)/10).toFixed(1);
+    var destination = pick(destinations);
+    var mainCharScore = randInt(55, 98);
+    var sideCharScore = randInt(20, 70);
+    var npcScore = randInt(5, 40);
+    var villainScore = randInt(5, 45);
+    var redFlag = pick(redFlags);
+    var house = pick(houses);
+    var superpower = pick(superpowers);
+    var stupidity = randInt(40, 97);
+    var chaos = randInt(30, 99);
+    var laziness = randInt(20, 95);
+    var love = randInt(30, 99);
+    var midnightFood = pick(foods);
+    var zombieSurvival = generateZombieSurvival();
+    var alienName = generateAlienName();
+    var secretTalent = pick(secretTalents);
+
+    lastResult = {
+      food: food, animal: animal, marriageYear: marriageYear, marriageConfidence: marriageConfidence,
+      salaryLPA: salaryLPA, destination: destination, mainCharScore: mainCharScore,
+      redFlag: redFlag, house: house, superpower: superpower, stupidity: stupidity,
+      chaos: chaos, laziness: laziness, love: love, midnightFood: midnightFood,
+      zombieSurvival: zombieSurvival, alienName: alienName, secretTalent: secretTalent,
+      photo: photoDataUrl
+    };
+
+    function cardHTML(icon, label, value, desc){
+      return '<div class="result-card glass">' +
+        '<div class="ri">' + icon + '</div>' +
+        '<div class="rc">' +
+          '<div class="rl">' + label + '</div>' +
+          '<div class="rv">' + value + '</div>' +
+          (desc ? '<div class="rd">' + desc + '</div>' : '') +
+        '</div></div>';
+    }
+
+    function progressCardHTML(icon, label, value, desc, pct, color, fillId){
+      return '<div class="result-card glass">' +
+        '<div class="ri">' + icon + '</div>' +
+        '<div class="rc">' +
+          '<div class="rl">' + label + '</div>' +
+          '<div class="rv">' + value + '</div>' +
+          (desc ? '<div class="rd">' + desc + '</div>' : '') +
+          '<div class="progress-row"><div class="pbar"><div class="pfill" id="' + fillId + '" data-pct="' + pct + '" style="width:0%; background:' + color + '"></div></div></div>' +
+        '</div></div>';
+    }
+
+    function miniGridHTML(){
+      return '<div class="result-card glass" style="flex-direction:column;">' +
+        '<div class="rl" style="margin-bottom:10px;">Extra Fun Results</div>' +
+        '<div class="mini-grid">' +
+          '<div class="mini-stat"><div class="mv">' + chaos + '%</div><div class="ml">😂 Chaos</div></div>' +
+          '<div class="mini-stat"><div class="mv">' + laziness + '%</div><div class="ml">😴 Laziness</div></div>' +
+          '<div class="mini-stat"><div class="mv">' + love + '%</div><div class="ml">❤️ Love Energy</div></div>' +
+          '<div class="mini-stat"><div class="mv">' + midnightFood.name + '</div><div class="ml">🍟 Midnight Food</div></div>' +
+        '</div></div>';
+    }
+
+    // Group results into categorized slides — same-category answers share a slide
+    var slideDefs = [
+      {
+        title: '🍛 Food & Spirit Animal',
+        html: cardHTML('🍛', 'Your Food', food.name + ' ' + food.emoji, food.desc) +
+              cardHTML('🐼', 'Your Animal', animal.name + ' ' + animal.emoji, animal.desc)
+      },
+      {
+        title: '💍 Love, Money & Future',
+        html: cardHTML('💍', 'Your Marriage Year', marriageYear + ' 💍', 'Confidence: ' + marriageConfidence + '%') +
+              cardHTML('💰', 'Your Future Salary', '₹' + salaryLPA + ' LPA 💰', 'Your bank account is currently negotiating with the universe.') +
+              cardHTML('✈️', 'Your Future Travel Destination', destination.name + ' ' + destination.emoji, destination.reason)
+      },
+      {
+        title: '👑 Your Character',
+        html: progressCardHTML('👑', 'Main-Character Score', mainCharScore + '% 👑', 'Side character: ' + sideCharScore + '% · NPC: ' + npcScore + '% · Villain: ' + villainScore + '%', mainCharScore, 'linear-gradient(90deg,#FF6FA0,#8B7CF6)', 'fillMain') +
+              cardHTML('🚩', 'Your Red Flag', redFlag, redFlagDescs[redFlag]) +
+              cardHTML('🧙', 'Your Hogwarts-Style Personality', house.name + ' ' + house.emoji, house.desc)
+      },
+      {
+        title: '🦸 Powers & Flaws',
+        html: cardHTML('🦸', 'Your Superpower', superpower + ' 🦸', 'Impressive. Slightly useless. Very you.') +
+              progressCardHTML('🤡', 'Your Stupidity Level', stupidity + '% 🤡 · Certified Silly Goose', 'Your intelligence is perfectly normal. Your decisions, however, are being investigated.', stupidity, 'linear-gradient(90deg,#FFD166,#FF6FA0)', 'fillStupid') +
+              cardHTML('🎭', 'Your Secret Talent', secretTalent, '')
+      },
+      {
+        title: '🧟 Extra Chaos',
+        html: miniGridHTML() +
+              cardHTML('🧟', 'Zombie Apocalypse Survival Time', zombieSurvival, 'You would survive longer if you stopped checking Instagram.') +
+              cardHTML('👽', 'Your Alien Name', alienName + ' 👽', 'Please use this name responsibly.')
+      }
+    ];
+
+    slidesTrack.innerHTML = '';
+    slideDotsWrap.innerHTML = '';
+    slideTitles = slideDefs.map(function(def){ return def.title; });
+
+    slideDefs.forEach(function(def, i){
+      var slideEl = document.createElement('div');
+      slideEl.className = 'slide';
+      slideEl.innerHTML = def.html;
+      slidesTrack.appendChild(slideEl);
+
+      var dot = document.createElement('button');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i+1));
+      dot.addEventListener('click', function(){ goToSlide(i); });
+      slideDotsWrap.appendChild(dot);
+    });
+
+    currentSlide = 0;
+    totalSlides = slideDefs.length;
+    slidesTrack.style.transform = 'translateX(0%)';
+    updateSlideUI(true);
+
+    // summary list
+    var summaryList = document.getElementById('summaryList');
+    var summaryItems = [
+      ['Food', food.name + ' ' + food.emoji],
+      ['Animal', animal.name + ' ' + animal.emoji],
+      ['Marriage year', marriageYear],
+      ['Future salary', '₹' + salaryLPA + ' LPA'],
+      ['Travel destination', destination.name + ' ' + destination.emoji],
+      ['Main-character score', mainCharScore + '%'],
+      ['Red flag', redFlag],
+      ['Hogwarts personality', house.name + ' ' + house.emoji],
+      ['Superpower', superpower],
+      ['Stupidity level', stupidity + '%']
+    ];
+    summaryList.innerHTML = summaryItems.map(function(item){
+      return '<li><span class="sk">' + item[0] + '</span><span class="sv">' + item[1] + '</span></li>';
+    }).join('');
+  }
+
+  /* ---------------------------------------------------------
+     7. Share / Save / Scan again
+  --------------------------------------------------------- */
+  function buildShareText(){
+    if (!lastResult) return '';
+    return "✨ MY FACEFATE RESULTS ✨\n" +
+      "🍛 Food: " + lastResult.food.name + "\n" +
+      "🐼 Animal: " + lastResult.animal.name + "\n" +
+      "💍 Marriage year: " + lastResult.marriageYear + "\n" +
+      "💰 Future salary: ₹" + lastResult.salaryLPA + " LPA\n" +
+      "✈️ Travel destination: " + lastResult.destination.name + "\n" +
+      "👑 Main-character score: " + lastResult.mainCharScore + "%\n" +
+      "🚩 Red flag: " + lastResult.redFlag + "\n" +
+      "🧙 Hogwarts house: " + lastResult.house.name + "\n" +
+      "🦸 Superpower: " + lastResult.superpower + "\n" +
+      "🤡 Stupidity level: " + lastResult.stupidity + "%\n\n" +
+      "Find your fate at FaceFate ✨ (100% entertainment, 0% scientific accuracy)";
+  }
+
+  document.getElementById('btnShare').addEventListener('click', function(){
+    var text = buildShareText();
+    if (navigator.share){
+      navigator.share({ title: 'My FaceFate Results ✨', text: text }).catch(function(){});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function(){
+        showToast('Copied your results to the clipboard! 📋');
+      }).catch(function(){
+        showToast('Could not copy — please try again.');
+      });
+    } else {
+      showToast('Sharing is not supported on this browser.');
+    }
+  });
+
+  document.getElementById('btnSave').addEventListener('click', function(){
+    if (!lastResult) return;
+    var canvas = document.getElementById('shareCanvas');
+    var W = 900, H = 1400;
+    canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext('2d');
+
+    var grad = ctx.createLinearGradient(0,0,W,H);
+    grad.addColorStop(0, '#EDE4FF');
+    grad.addColorStop(0.5, '#DDF0FF');
+    grad.addColorStop(1, '#FFE1EF');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0,0,W,H);
+
+    ctx.fillStyle = '#3B2E5A';
+    ctx.textAlign = 'center';
+    ctx.font = '700 46px sans-serif';
+    ctx.fillText('✨ FaceFate Results ✨', W/2, 90);
+
+    function drawPhotoAndText(){
+      var lines = [
+        '🍛 Food: ' + lastResult.food.name,
+        '🐼 Animal: ' + lastResult.animal.name,
+        '💍 Marriage year: ' + lastResult.marriageYear,
+        '💰 Salary: ₹' + lastResult.salaryLPA + ' LPA',
+        '✈️ Destination: ' + lastResult.destination.name,
+        '👑 Main-character score: ' + lastResult.mainCharScore + '%',
+        '🚩 Red flag: ' + lastResult.redFlag,
+        '🧙 House: ' + lastResult.house.name,
+        '🦸 Superpower: ' + lastResult.superpower,
+        '🤡 Stupidity level: ' + lastResult.stupidity + '%'
+      ];
+      ctx.font = '32px sans-serif';
+      ctx.textAlign = 'left';
+      var startY = 620;
+      lines.forEach(function(line, i){
+        ctx.fillStyle = '#3B2E5A';
+        ctx.fillText(line, 90, startY + i*58);
+      });
+      ctx.textAlign = 'center';
+      ctx.font = '22px sans-serif';
+      ctx.fillStyle = '#6B5C8F';
+      ctx.fillText('100% entertainment • 0% scientific accuracy', W/2, H-50);
+
+      canvas.toBlob(function(blob){
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'facefate-results.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+        showToast('Saved your results image! 📥');
+      }, 'image/png');
+    }
+
+    var img = new Image();
+    img.onload = function(){
+      var size = 260;
+      var cx = W/2, cy = 330;
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, size/2, 0, Math.PI*2);
+      ctx.closePath();
+      ctx.clip();
+      ctx.drawImage(img, cx-size/2, cy-size/2, size, size);
+      ctx.restore();
+      ctx.lineWidth = 8;
+      ctx.strokeStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(cx, cy, size/2, 0, Math.PI*2);
+      ctx.stroke();
+      drawPhotoAndText();
+    };
+    img.onerror = drawPhotoAndText;
+    img.src = lastResult.photo;
+  });
+
+  document.getElementById('btnScanAgain').addEventListener('click', function(){
+    resetCaptureUI();
+    currentPhotoDataUrl = null;
+    fileInput.value = '';
+    showScreen('capture');
+  });
+
+})();
+</script>
+</body>
+</html>
